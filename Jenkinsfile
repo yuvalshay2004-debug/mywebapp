@@ -5,8 +5,8 @@ pipeline {
         // כאן ID של ה-Credential ב-Jenkins שמכיל username + password או token של Docker Hub
         DOCKER_CREDENTIALS_ID = 'dockerhub-creds'
         DOCKER_IMAGE = "yuvalzoro6767/mywebapp:latest"
-        KUBE_DEPLOYMENT_YAML = "mywebapp-deployment.yaml"
-        KUBE_SERVICE_YAML = "mywebapp-service.yaml"
+        KUBE_DEPLOYMENT_YAML = "k8s/mywebapp-deployment.yaml"
+        KUBE_SERVICE_YAML = "k8s/mywebapp-service.yaml"
     }
 
     stages {
