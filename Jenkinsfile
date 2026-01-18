@@ -10,11 +10,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/yuval/mywebapp.git'
-            }
-        }
 
         stage('Build Docker Image') {
             steps {
