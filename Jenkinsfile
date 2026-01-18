@@ -35,8 +35,9 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh "kubectl apply -f $KUBE_DEPLOYMENT_YAML"
-                    sh "kubectl apply -f $KUBE_SERVICE_YAML"
+                    sh "minikube -p minikube kubectl -- apply -f k8s/mywebapp-deployment.yaml"
+                    sh "minikube -p minikube kubectl -- apply -f k8s/mywebapp-service.yaml
+"
                 }
             }
         }
