@@ -1,31 +1,32 @@
 pipeline {
     agent any
-
+    environment {
+        DOCKER_IMAGE = "yuvalzoro6767/mywebapp:latest"
+        KUBECONFIG = "/Users/yuahi/.kube/config" // צריך להצביע ל-kubeconfig של Mac
+    }
     stages {
-        stage('Build') {
+        stage('Build Docker Image') {
             steps {
-                sh 'docker build . -t mywebapp'
+                script {
+                    sh 'docker build -t $DOCKER_IMAGE .'
+                }
             }
         }
-
-        stage('Test') {
+        stage('Push Docker Image') {
             steps {
-                echo 'Hello Jenkins!'
+                script {
+                    sh 'docker push $DOCKER_IMAGE'
+                }
             }
         }
-
-        stage('Deploy') {
+        stage('Deploy to Kubernetes') {
             steps {
-                // stop and remove the container if no longer exists
-                sh 'docker stop mywebapp || true'
-                sh 'docker rm mywebapp || true'
-
-                // new run with name
-                sh 'docker run -d --name mywebapp -p 5000:5000 mywebapp'
+                script {
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
+                }
             }
         }
     }
 }
-
-
 
