@@ -1,8 +1,8 @@
 pipeline {
     agent any
     environment {
+	DOCKERHUB_CREDENTIALS = credentials('dockerhub-creds')
         DOCKER_IMAGE = "yuvalzoro6767/mywebapp:latest"
-        KUBECONFIG = "/Users/yuahi/.kube/config" // צריך להצביע ל-kubeconfig של Mac
     }
     stages {
         stage('Build Docker Image') {
@@ -22,8 +22,8 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 script {
-                    sh 'kubectl apply -f deployment.yaml'
-                    sh 'kubectl apply -f service.yaml'
+                    sh 'kubectl apply -f mywebapp-deployment.yaml'
+                    sh 'kubectl apply -f mywebapp-service.yaml'
                 }
             }
         }
